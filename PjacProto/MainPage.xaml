@@ -7,8 +7,39 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BorderThickness" Value="5" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="BorderBrush" >
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="Yellow" Offset="0.0" />
+                        <GradientStop Color="Red" Offset="0.25" />
+                        <GradientStop Color="Blue" Offset="0.75" />
+                        <GradientStop Color="LimeGreen" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    
     <Grid>
-
+        <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="150">
+            <SplitView.Pane>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                        ddsdf
+                    </TextBlock>
+                    <Button x:Name="ClearButton" Content="CLEAR" Width="111" Click="ClearButton_Click"/>
+                    <Button x:Name="button1" Content="Pjac" Width="111" Click="Button1_Click"/>
+                    <Button x:Name="button2" Content="Test" Width="111" Click="Button2_Click"/>
+                </StackPanel>
+            </SplitView.Pane>
+            <Grid x:Name="myGrid">
+                <TextBlock Text="Content" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </SplitView>
     </Grid>
 </Page>

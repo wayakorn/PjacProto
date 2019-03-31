@@ -116,6 +116,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AdaptiveCardTemplate.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -129,6 +130,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="PjacProto_TemporaryKey.pfx" />
+    <Content Include="Assets\pjac_adaptivecards.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
@@ -151,6 +153,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AdaptiveCards.Rendering.Uwp">
+      <Version>1.1.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.7</Version>
     </PackageReference>
