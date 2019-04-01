@@ -36,19 +36,19 @@
                                     "facts": [
                                         {
                                             "title": "Status:",
-                                            "value": "{%%STATUS%%}"
+                                            "value": "%%STATUS%%"
                                         },
                                         {
                                             "title": "Owner:",
-                                            "value": "{%%OWNER%%}"
+                                            "value": "%%OWNER%%"
                                         },
                                         {
                                             "title": "Pages:",
-                                            "value": "{%%PAGES%%}"
+                                            "value": "%%PAGES%%"
                                         },
                                         {
                                             "title": "Completed:",
-                                            "value": " {{DATE(%%DATE_COMPLETED%%Z,SHORT)}} at {{TIME(%%DATE_COMPLETED%%Z)}} "
+                                            "value": "{{DATE(%%DATE_COMPLETED%%Z,SHORT)}} at {{TIME(%%DATE_COMPLETED%%Z)}} "
                                         }
                                     ]                
                                 }

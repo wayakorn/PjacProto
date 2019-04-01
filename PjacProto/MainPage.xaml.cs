@@ -14,10 +14,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using AdaptiveCards.Rendering.Uwp;
-using Windows.Storage;
-using System.Runtime.Serialization.Json;
-using Windows.Data.Json;
-using System.Text;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -32,16 +28,6 @@ namespace PjacProto
         {
             this.InitializeComponent();
         }
-
-        string _GetAdaptiveCardJson()
-        {
-            string result = AdaptiveCardTemplate.TemplateBegin;
-            result += AdaptiveCardTemplate.GetJobCard("Document 1", DateTime.Now, "Printing", "Joe Smith", 10, DateTime.Now);
-///            result += AdaptiveCardTemplate.GetJobCard("Document 2", DateTime.Now, "Printing", "Way", 2, DateTime.Now);
-            result += AdaptiveCardTemplate.TemplateEnd;
-            return result;
-        }
-
         void _ShowAdaptiveCard(string cardJson)
         {
             var hostConfig = new AdaptiveHostConfig()
@@ -81,13 +67,16 @@ namespace PjacProto
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-            _ShowAdaptiveCard(_GetAdaptiveCardJson());
+            var builder = new AdaptiveCardBuilder();
+            builder.AddJob(new AdaptiveCardBuilder.PrintJob("Document 1", DateTime.Now, "Printing", "Joe Smith", 10, DateTime.Now));
+            string card = builder.ToString();
+            _ShowAdaptiveCard(card);
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            string json = AdaptiveCardTemplate.ReadTextAsset("pjac_adaptivecards.json");
-            _ShowAdaptiveCard(json);
+            string card = Util.ReadTextAsset("pjac_adaptivecards.json");
+            _ShowAdaptiveCard(card);
         }
     }
 }

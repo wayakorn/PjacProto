@@ -116,7 +116,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AdaptiveCardTemplate.cs" />
+    <Compile Include="AdaptiveCardBuilder.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -124,13 +124,13 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\pjac_adaptivecards_template_end.json" />
-    <None Include="PjacProto_TemporaryKey.pfx" />
     <Content Include="Assets\pjac_adaptivecards.json" />
     <Content Include="Assets\pjac_adaptivecards_template_begin.json" />
   </ItemGroup>
