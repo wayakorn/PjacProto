@@ -86,10 +86,7 @@ namespace PjacProto
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            Uri appUri = new Uri("ms-appx:///Assets/pjac_adaptivecards.json"); //File name should be prefixed with 'ms-appx:///Assets/* 
-            StorageFile anjFile = StorageFile.GetFileFromApplicationUriAsync(appUri).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
-            string json = FileIO.ReadTextAsync(anjFile).AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
-
+            string json = AdaptiveCardTemplate.ReadTextAsset("pjac_adaptivecards.json");
             _ShowAdaptiveCard(json);
         }
     }

@@ -1,0 +1,61 @@
+﻿        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "url": "http://icons.iconarchive.com/icons/dtafalonso/modern-xp/512/ModernXP-31-Filetype-Word-icon.png",
+                                    "size": "small"
+                                }
+                            ],
+                            "width": "auto"
+                        },
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "weight": "bolder",
+                                    "text": "%%NAME%%",
+                                    "wrap": true
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "spacing": "None",
+                                    "text": "Submitted {{DATE(%%DATE_SUBMITTED%%Z,SHORT)}} at {{TIME(%%DATE_SUBMITTED%%Z)}} ",
+                                    "isSubtle": true,
+                                    "wrap": true
+                                },
+                                {
+                                    "type": "FactSet",
+                                    "facts": [
+                                        {
+                                            "title": "Status:",
+                                            "value": "{%%STATUS%%}"
+                                        },
+                                        {
+                                            "title": "Owner:",
+                                            "value": "{%%OWNER%%}"
+                                        },
+                                        {
+                                            "title": "Pages:",
+                                            "value": "{%%PAGES%%}"
+                                        },
+                                        {
+                                            "title": "Completed:",
+                                            "value": " {{DATE(%%DATE_COMPLETED%%Z,SHORT)}} at {{TIME(%%DATE_COMPLETED%%Z)}} "
+                                        }
+                                    ]                
+                                }
+                            ],
+                            "width": "stretch"
+                        }
+                    ]
+                }
+            ]
+        }

@@ -1,0 +1,35 @@
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "size": "medium",
+              "weight": "bolder",
+              "text": "Recent Print Jobs"
+            }
+          ],
+          "width": "stretch"
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "Image",
+              "horizontalAlignment": "right",
+              "size": "small",
+              "url": "http://png-4.findicons.com/files/icons/772/token_light/128/gear.png",
+              "selectAction": {
+                "type": "Action.Submit",
+                "data": "Settings invoked"
+              }
+            }
+          ]
+        }
+      ]
+    },

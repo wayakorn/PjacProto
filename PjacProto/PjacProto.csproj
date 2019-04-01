@@ -129,10 +129,13 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\pjac_adaptivecards_template_end.json" />
     <None Include="PjacProto_TemporaryKey.pfx" />
     <Content Include="Assets\pjac_adaptivecards.json" />
+    <Content Include="Assets\pjac_adaptivecards_template_begin.json" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\pjac_adaptivecards_template_job.json" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
