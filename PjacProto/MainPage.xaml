@@ -5,23 +5,16 @@
     xmlns:local="using:PjacProto"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
     
     <Page.Resources>
+        <Style TargetType="SplitView">
+            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeBlackMediumBrush}" />
+        </Style>
         <Style TargetType="Button">
-            <Setter Property="BorderThickness" Value="5" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="BorderBrush" >
-                <Setter.Value>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="Yellow" Offset="0.0" />
-                        <GradientStop Color="Red" Offset="0.25" />
-                        <GradientStop Color="Blue" Offset="0.75" />
-                        <GradientStop Color="LimeGreen" Offset="1.0" />
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="BorderThickness" Value="8" />
+            <Setter Property="Background" Value="Black" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
     </Page.Resources>
     

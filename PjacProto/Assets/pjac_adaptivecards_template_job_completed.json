@@ -1,0 +1,4 @@
+﻿                                        {
+                                            "title": "Completed:",
+                                            "value": "{{DATE(%%DATE_COMPLETED%%Z,SHORT)}} at {{TIME(%%DATE_COMPLETED%%Z)}} "
+                                        },

@@ -9,7 +9,7 @@
                             "items": [
                                 {
                                     "type": "Image",
-                                    "url": "http://icons.iconarchive.com/icons/dtafalonso/modern-xp/512/ModernXP-31-Filetype-Word-icon.png",
+                                    "url": "%%ICON_URL%%",
                                     "size": "small"
                                 }
                             ],
@@ -46,9 +46,10 @@
                                             "title": "Pages:",
                                             "value": "%%PAGES%%"
                                         },
+%%COMPLETED_JSON%%
                                         {
-                                            "title": "Completed:",
-                                            "value": "{{DATE(%%DATE_COMPLETED%%Z,SHORT)}} at {{TIME(%%DATE_COMPLETED%%Z)}} "
+                                            "title": "",
+                                            "value": ""
                                         }
                                     ]                
                                 }
