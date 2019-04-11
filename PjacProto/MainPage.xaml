@@ -5,34 +5,24 @@
     xmlns:local="using:PjacProto"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-    
+    mc:Ignorable="d" Width="648.126" Height="961.836">
+
     <Page.Resources>
-        <Style TargetType="SplitView">
-            <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeBlackMediumBrush}" />
-        </Style>
         <Style TargetType="Button">
             <Setter Property="BorderThickness" Value="8" />
             <Setter Property="Background" Value="Black" />
             <Setter Property="Foreground" Value="White" />
         </Style>
     </Page.Resources>
-    
-    <Grid>
-        <SplitView IsPaneOpen="True" DisplayMode="Inline" OpenPaneLength="150">
-            <SplitView.Pane>
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
-                        ddsdf
-                    </TextBlock>
-                    <Button x:Name="ClearButton" Content="CLEAR" Width="111" Click="ClearButton_Click"/>
-                    <Button x:Name="button1" Content="Pjac" Width="111" Click="Button1_Click"/>
-                    <Button x:Name="button2" Content="Test" Width="111" Click="Button2_Click"/>
-                </StackPanel>
-            </SplitView.Pane>
-            <Grid x:Name="myGrid">
-                <TextBlock Text="Content" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Grid>
-        </SplitView>
-    </Grid>
+
+    <StackPanel HorizontalAlignment="Center" Width="auto">
+        <TextBlock VerticalAlignment="Center">
+            Welcome to PjacProto Print Dialog
+        </TextBlock>
+        <ComboBox x:Name="printerListComboBox" Margin="48,0,0,0" ItemsSource="{Binding Path=m_model.PrinterList}"></ComboBox>
+        <Button x:Name="ClearButton" Content="Clear" Width="111" Click="ClearButton_Click">
+        </Button>
+        <Button x:Name="button1" Content="Add" Width="111" Click="Button1_Click"/>
+        <Button x:Name="button2" Content="Show PJAC" Width="111" Click="Button2_Click"/>
+    </StackPanel>
 </Page>

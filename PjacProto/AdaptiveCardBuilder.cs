@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PjacProto
 {
-    class AdaptiveCardBuilder
+    public class AdaptiveCardBuilder
     {
         public class PrintJob
         {
@@ -55,6 +55,11 @@ namespace PjacProto
         }
 
         readonly List<PrintJob> m_printJobs = new List<PrintJob>();
+
+        public void Clear()
+        {
+            m_printJobs.Clear();
+        }
 
         public void AddJob(PrintJob job)
         {
