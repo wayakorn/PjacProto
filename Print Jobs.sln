@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Print Jobs", "Print Jobs\Print Jobs.csproj", "{989B4242-E125-4270-A60B-0BBACFA29694}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{989B4242-E125-4270-A60B-0BBACFA29694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989B4242-E125-4270-A60B-0BBACFA29694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989B4242-E125-4270-A60B-0BBACFA29694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989B4242-E125-4270-A60B-0BBACFA29694}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69312900-36EC-43AB-85FE-E454649E3485}
+	EndGlobalSection
+EndGlobal
