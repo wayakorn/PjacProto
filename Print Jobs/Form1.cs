@@ -29,21 +29,27 @@ namespace Print_Jobs
             InitializeComponent();
         }
 
-        private void CreateRandomPrintJob()
+        private void CreateRandomPrintJob(bool outOfPaper)
         {
             m_jobId++;
 
             if (m_pjac == null)
             {
                 m_pjac = new PjacForm();
+                m_pjac.FormClosed += M_pjac_FormClosed;
                 m_pjac.Show();
             }
 
             string docName = GetRandomName(DocumentNames);
             string printerName = GetRandomName(PrinterNames);
-            m_pjac.AddCard(docName, printerName);
+            m_pjac.AddCard(new Card(docName, printerName, outOfPaper));
 
             AddStatus($@"Printing job {m_jobId} ""{printerName}""...");
+        }
+
+        private void M_pjac_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            m_pjac = null;
         }
 
         private void AddStatus(string line)
@@ -55,7 +61,7 @@ namespace Print_Jobs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            CreateRandomPrintJob();
+            CreateRandomPrintJob(checkBoxOutOfPaper.Checked);
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -180,43 +186,43 @@ namespace Print_Jobs
             "Brother MFC-J5830DW",
             "Brother MFC-L2740DW series",
             "Brother MFC-L2750DW series",
-            "Brother_MFC-9340CDW",
-            "Brother_MFC-J985DW",
-            "Brother_MFC-L2700DW",
-            "Brother_MFC-L6800DW",
-            "Brother_MFC_J5620DW",
-            "Brother_MFC_L2740DW",
-            "Brother_MFC_L2750DW",
-            "Brother_PJ-773",
+            "Brother MFC-9340CDW",
+            "Brother MFC-J985DW",
+            "Brother MFC-L2700DW",
+            "Brother MFC-L6800DW",
+            "Brother MFC J5620DW",
+            "Brother MFC L2740DW",
+            "Brother MFC L2750DW",
+            "Brother PJ-773",
             "Canon TS9000 series",
-            "Canon_ImageClass_MF735_CDW",
-            "Canon_MB2720",
-            "Canon_MG7720",
-            "Canon_Pixma_TR8520",
-            "Canon_TS9020",
-            "Epson_WF2750",
-            "Epson_WF3620",
-            "Epson_XP640",
+            "Canon ImageClass MF735 CDW",
+            "Canon MB2720",
+            "Canon MG7720",
+            "Canon Pixma TR8520",
+            "Canon TS9020",
+            "Epson WF2750",
+            "Epson WF3620",
+            "Epson XP640",
             "HP OfficeJet Pro 8740",
             "HpEnvy5530",
             "HpEnvy7640",
             "HpEnvy7640series",
             "HPEnvyPhoto7855",
             "HPPageWidePro477DW",
-            "HP_EnvyPhoto7800",
-            "HP_Envy_5530",
-            "HP_LaserJet_700_MDP_M775",
-            "HP_LaserJet_M506",
-            "HP_Officejetpro8630",
-            "HP_PageWidePro477MFP",
+            "HP EnvyPhoto7800",
+            "HP Envy 5530",
+            "HP LaserJet 700 MDP M775",
+            "HP LaserJet M506",
+            "HP Officejetpro8630",
+            "HP PageWidePro477MFP",
             "Lexmark CX725",
             "Lexmark MX610de",
-            "Lexmark_CX725",
-            "Lexmark_MX610de",
+            "Lexmark CX725",
+            "Lexmark MX610de",
             "PantumM6800FDW",
-            "Samsung_C3060FW",
+            "Samsung C3060FW",
             "Xerox VersaLink C405",
-            "Xerox_AltaLink_B8055"
+            "Xerox AltaLink B8055"
         };
 
     }

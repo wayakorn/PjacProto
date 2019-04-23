@@ -13,12 +13,14 @@ namespace Print_Jobs
     public partial class Card : Form
     {
         readonly Random m_random;
+        readonly bool m_simOutOfPaper;
         readonly int m_totalPages;
         int m_curAntsIndent = 0;
 
-        public Card(string docName, string printerName)
+        public Card(string docName, string printerName, bool simOutOfPaper)
         {
             m_random = new Random((int)DateTime.Now.Ticks);
+            m_simOutOfPaper = simOutOfPaper;
             m_totalPages = (m_random.Next() % 8) + 1;
 
             InitializeComponent();
@@ -56,26 +58,34 @@ namespace Print_Jobs
                         {
                             textBoxStatus.Text = $"Printing page {currentPage}";
                         }
+                        else if (m_simOutOfPaper)
+                        {
+                            textBoxStatus.Text = "Out of paper";
+                            StopTimer();
+                        }
                         else
                         {
                             textBoxStatus.Text = "Completed";
+                            StopTimer();
                         }
                     }
-                    break;
-                case 'C': // Completed
-                    textBoxAnts.Visible = false;
-                    timerAnts.Enabled = false;
                     break;
                 default:
                     throw new Exception("unhandled state");
             }
         }
 
-        private void buttonAbort_Click(object sender, EventArgs e)
+        private void StopTimer()
         {
             timerAnts.Enabled = false;
-            timerAnts.Enabled = false;
+            textBoxAnts.Visible = false;
+            buttonAbort.Visible = false;
+        }
+
+        private void buttonAbort_Click(object sender, EventArgs e)
+        {
             textBoxStatus.Text = "Cancelled";
+            StopTimer();
         }
     }
 }
