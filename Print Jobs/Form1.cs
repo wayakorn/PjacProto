@@ -25,6 +25,8 @@ namespace Print_Jobs
         readonly string AppPath = Assembly.GetExecutingAssembly().Location;
         readonly string UrlProtocol;
 
+        readonly PjacForm m_pjac;
+
         public Form1()
         {
             UrlProtocol = AppName.Replace(' ', '-');
@@ -33,6 +35,10 @@ namespace Print_Jobs
 
             RegisterProtocol();
             RegisterShortcut();
+
+
+            m_pjac = new PjacForm();
+            m_pjac.Show();
         }
 
         private void RegisterShortcut()
