@@ -169,6 +169,33 @@ namespace Print_Jobs
                 ToastNotificationManager.History.Remove(notif.Tag, AppName, AppName);
             }
         }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var notifs = ToastNotificationManager.History.GetHistory(AppName);
+            if (notifs.Count > 0)
+            {
+                var notif = notifs[0];
+                var xml = notif.Content;
+                var nodeList = xml.GetElementsByTagName("text");
+                if (nodeList.Count >= 2)
+                {
+                    nodeList[1].InnerText = $"Job {notif.Tag}, out of paper!";
+
+                    ToastNotificationManager.History.Remove(notif.Tag, AppName, AppName);
+
+                    var toast = new ToastNotification(xml)
+                    {
+                        Group = AppName,
+                        Tag = notif.Tag
+                    };
+
+                    toast.Activated += Toast_Activated;
+
+                    ToastNotificationManager.CreateToastNotifier(AppName).Show(toast);
+                    AddStatus($@"Job {notif.Tag} is out of paper.");
+                }
+            }
+        }
 
         private string GetRandomName()
         {
@@ -279,5 +306,6 @@ namespace Print_Jobs
             string name = DocumentNames[(rnd.Next() % DocumentNames.Length)];
             return name;
         }
+
     }
 }
