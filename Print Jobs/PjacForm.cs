@@ -17,12 +17,12 @@ namespace Print_Jobs
             InitializeComponent();
         }
 
-        private void PjacForm_Load(object sender, EventArgs e)
+        public void AddCard(string docName, string printerName)
         {
-            Card card = new Card("docName", "Canon MFP 2432", "Printing", DateTime.Now.ToString());
+            var card = new Card(docName, printerName);
             card.TopLevel = false;
-            Controls.Add(card);
             card.Show();
+            flowLayoutPanel1.Controls.Add(card);
         }
     }
 }

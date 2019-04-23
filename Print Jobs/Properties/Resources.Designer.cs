@@ -63,6 +63,16 @@ namespace Print_Jobs.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap docIcon_50x50 {
+            get {
+                object obj = ResourceManager.GetObject("docIcon_50x50", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap docIcon_70x70 {
             get {
                 object obj = ResourceManager.GetObject("docIcon_70x70", resourceCulture);

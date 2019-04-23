@@ -109,6 +109,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\docIcon_50x50.png" />
     <Content Include="Assets\docIcon_70x70.png" />
     <None Include="Assets\progress_bar_animated.gif" />
   </ItemGroup>
