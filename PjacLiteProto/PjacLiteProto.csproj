@@ -73,9 +73,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Propvariant.cs" />
-    <Compile Include="ShellHelpers.cs" />
-    <Compile Include="ShellPropertyKeys.cs" />
     <EmbeddedResource Include="Card.resx">
       <DependentUpon>Card.cs</DependentUpon>
     </EmbeddedResource>

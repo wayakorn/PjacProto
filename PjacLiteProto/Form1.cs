@@ -1,21 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
-
-using Print_Jobs.ShellHelpers;
-using Microsoft.Win32;
 
 namespace Print_Jobs
 {
@@ -204,22 +189,22 @@ namespace Print_Jobs
             "Epson WF3620",
             "Epson XP640",
             "HP OfficeJet Pro 8740",
-            "HpEnvy5530",
-            "HpEnvy7640",
-            "HpEnvy7640series",
-            "HPEnvyPhoto7855",
-            "HPPageWidePro477DW",
-            "HP EnvyPhoto7800",
+            "Hp Envy 5530",
+            "Hp Envy 7640",
+            "Hp Envy 7640 series",
+            "HP Envy Photo 7855",
+            "HP PageWidePro 477DW",
+            "HP Envy Photo7800",
             "HP Envy 5530",
             "HP LaserJet 700 MDP M775",
             "HP LaserJet M506",
-            "HP Officejetpro8630",
-            "HP PageWidePro477MFP",
+            "HP OfficeJet Pro 8630",
+            "HP PageWide Pro 477 MFP",
             "Lexmark CX725",
             "Lexmark MX610de",
             "Lexmark CX725",
             "Lexmark MX610de",
-            "PantumM6800FDW",
+            "Pantum M6800FDW",
             "Samsung C3060FW",
             "Xerox VersaLink C405",
             "Xerox AltaLink B8055"

@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Print_Jobs
@@ -20,17 +13,20 @@ namespace Print_Jobs
         {
             InitializeComponent();
 
-            var screen = Screen.PrimaryScreen.Bounds;
+            var screen = Screen.GetWorkingArea(Screen.PrimaryScreen.Bounds);
             int left = screen.Width - Bounds.Width;
             int top = screen.Height - Bounds.Height;
+            left = left < 0 ? 0 : left;
+            top = top < 0 ? 0 : top;
             SetWindowPos(Handle, 0, left, top, Bounds.Width, Bounds.Height, 0);
         }
 
         public void AddCard(Card card)
         {
             card.TopLevel = false;
+            card.Dock = DockStyle.Top;
             card.Show();
-            flowLayoutPanel1.Controls.Add(card);
+            Controls.Add(card);
         }
     }
 }
