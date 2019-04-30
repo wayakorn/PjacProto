@@ -2,6 +2,7 @@ const wchar_t* FILEPATH = L"c:\\temp\\test.bmp";
 const wchar_t* PRINTERNAME = L"Microsoft Print to PDF";
 const float PAGE_MARGIN_IN_DIPS = 96.0f; // 1 inch
 const float DEFAULT_DPI = 96.0f;
+const float FRAME_HEIGHT_IN_DIPS = 400.0f;           // 400 DIPs
 
 // DirectX header files
 #include <d2d1_1.h>
@@ -49,6 +50,70 @@ SIZE MyGetPageSize(const wchar_t* printerName)
 	ClosePrinter(hPrinter);
 
 	return result;
+}
+
+void DrawToPrintContext(
+	_In_ ID2D1DeviceContext* d2dContext,
+	UINT pageNumber,
+	SIZE pageSize,
+	SIZE bitmapSize,
+	ID2D1Bitmap* d2dBitmap
+)
+{
+	HRESULT hr = S_OK;
+
+	// Get the size of the displayed window.
+	D2D1_SIZE_U windowSize = { 0 };
+	windowSize.width = pageSize.cx;
+	windowSize.height = pageSize.cy;
+
+	// Compute the margin sizes.
+	FLOAT margin = PAGE_MARGIN_IN_DIPS;
+
+	// Get the size of the destination context ("page").
+	D2D1_SIZE_F targetSize = { 0 };
+	targetSize.width = pageSize.cx - 2 * margin;
+	targetSize.height = pageSize.cy - 2 * margin;
+
+	// Compute the size of the gridded background rectangle.
+	D2D1_SIZE_F frameSize = D2D1::SizeF(
+		targetSize.width,
+		FRAME_HEIGHT_IN_DIPS
+	);
+
+	// Compute the translation matrix that simulates scrolling or printing.
+	D2D1_MATRIX_3X2_F scrollTransform = D2D1::Matrix3x2F::Translation(margin, margin);
+
+	d2dContext->BeginDraw();
+
+	d2dContext->SetTransform(scrollTransform);
+
+	d2dContext->Clear(D2D1::ColorF(D2D1::ColorF::White));
+
+	if (pageNumber == 1)
+	{
+		/*
+		// Display geometries and text on screen. In printing case, display only on page 1.
+
+		// Paint a grid background
+		d2dContext->FillRectangle(
+			D2D1::RectF(0.0f, 0.0f, frameSize.width, frameSize.height),
+			m_gridPatternBrush
+		);
+		*/
+
+		// Draw a bitmap in the upper-left corner of the window.
+		D2D1_SIZE_F bitmapD2dSize;
+		bitmapD2dSize.width = bitmapSize.cx;
+		bitmapD2dSize.height = bitmapSize.cy;
+		d2dContext->DrawBitmap(
+			d2dBitmap,
+			D2D1::RectF(0.0f, 0.0f, bitmapD2dSize.width, bitmapD2dSize.height)
+		);
+	}
+
+	hr = d2dContext->EndDraw();
+	CHECK(SUCCEEDED(hr));
 }
 
 void PrintBitmap(const wchar_t* printerName, const wchar_t* bmpFilePath)
@@ -226,16 +291,22 @@ void PrintBitmap(const wchar_t* printerName, const wchar_t* bmpFilePath)
 	CHECK(d2dBitmap);
 
 	// Calculate the margin
-	const float margin = (2 * PAGE_MARGIN_IN_DIPS);
+///	const float margin = (2 * PAGE_MARGIN_IN_DIPS);
+
+	DrawToPrintContext(d2dContextForPrint, 1, paperSize, bitmapSize, d2dBitmap);
+
+	/*
 
 	// Draw the page into the commandList
 	d2dContextForPrint->BeginDraw();
 	d2dContextForPrint->DrawBitmap(d2dBitmap, D2D1::RectF(margin, margin, bitmapSize.cx, bitmapSize.cy));
 	d2dContextForPrint->EndDraw();
+	*/
 
 	// Playback the commandList onto the page and finalize it
 	hr = printControl->AddPage(commandList, D2D1::SizeF(paperSize.cx, paperSize.cy), nullptr);
 	CHECK(SUCCEEDED(hr));
+
 	hr = printControl->Close();
 	CHECK(SUCCEEDED(hr));
 }
