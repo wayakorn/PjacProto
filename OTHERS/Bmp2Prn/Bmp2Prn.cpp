@@ -1,6 +1,7 @@
 const wchar_t* FILEPATH = L"c:\\temp\\test.bmp";
 const wchar_t* PRINTERNAME = L"Microsoft Print to PDF";
 const float PAGE_MARGIN_IN_DIPS = 96.0f; // 1 inch
+const float DEFAULT_DPI = 96.0f;
 
 // DirectX header files
 #include <d2d1_1.h>
@@ -88,6 +89,39 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	);
 	CHECK(SUCCEEDED(hr));
 	CHECK(wicFactory);
+
+	// Create the bitmap decoder
+	IWICBitmapDecoder* wicBitmapDecoder;
+	hr = wicFactory->CreateDecoder(GUID_ContainerFormatBmp, &GUID_VendorMicrosoft, &wicBitmapDecoder);
+	CHECK(SUCCEEDED(hr));
+	CHECK(wicBitmapDecoder);
+
+	// Retrieve the first frame of the image from the decoder
+	IWICBitmapFrameDecode* pFrame;
+	hr = wicBitmapDecoder->GetFrame(0, &pFrame);
+	CHECK(SUCCEEDED(hr));
+	CHECK(pFrame);
+
+	// Convert the frame to 32bppPBGRA
+	IWICFormatConverter* formatConverter;
+	hr = wicFactory->CreateFormatConverter(&formatConverter);
+	CHECK(SUCCEEDED(hr));
+	CHECK(formatConverter);
+
+	// Initialize the formatConverter
+	hr = formatConverter->Initialize(
+		pFrame,                          // Input bitmap to convert
+		GUID_WICPixelFormat32bppPBGRA,   // Destination pixel format
+		WICBitmapDitherTypeNone,         // Specified dither pattern
+		nullptr,                         // Specify a particular palette 
+		0.f,                             // Alpha threshold
+		WICBitmapPaletteTypeCustom       // Palette translation type
+	);
+	CHECK(SUCCEEDED(hr));
+
+
+///	hr = m_pRT->CreateBitmapFromWicBitmap(m_pConvertedSourceBitmap, nullptr, &m_pD2DBitmap);
+
 
 	// Create D2d factory
 	D2D1_FACTORY_OPTIONS options = {};
@@ -201,6 +235,11 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	CHECK(SUCCEEDED(hr));
 	CHECK(wicBitmap);
 
+
+
+
+	// Create the render target: https://docs.microsoft.com/en-us/windows/desktop/Direct2D/direct2d-and-direct3d-interoperation-overview#writing-to-a-direct3d-surface-with-a-dxgi-surface-render-target
+	ID2D1RenderTarget* renderTarget;
     auto renderTargetProperties = D2D1::RenderTargetProperties(
         D2D1_RENDER_TARGET_TYPE_SOFTWARE,
         D2D1::PixelFormat(DXGI_FORMAT_B8G8R8A8_UNORM),
@@ -208,12 +247,12 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
         96.0f,
         D2D1_RENDER_TARGET_USAGE_NONE,
         D2D1_FEATURE_LEVEL_DEFAULT);
-
-	// Create the render target
-	ID2D1RenderTarget* renderTarget;
-	hr = d2dFactory->CreateWicBitmapRenderTarget(wicBitmap, &renderTargetProperties, &renderTarget);
+	hr = d2dFactory->CreateDxgiSurfaceRenderTarget((dxgiDevice, renderTargetProperties, &renderTarget);
 	CHECK(SUCCEEDED(hr));
 	CHECK(renderTarget);
+
+
+
 
 	// Create D2d bitmap
 	ID2D1Bitmap* d2dBitmap;
@@ -236,6 +275,10 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	d2dBitmap->Release();
 	renderTarget->Release();
 	wicBitmap->Release();
+
+	formatConverter->Release();
+	pFrame->Release();
+	wicBitmapDecoder->Release();
 
 	commandList->Release();
 	d2dContextForPrint->Release();
