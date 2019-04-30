@@ -90,6 +90,7 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	CHECK(SUCCEEDED(hr));
 	CHECK(wicFactory);
 
+	/*
 	// Create the bitmap decoder
 	IWICBitmapDecoder* wicBitmapDecoder;
 	hr = wicFactory->CreateDecoder(GUID_ContainerFormatBmp, &GUID_VendorMicrosoft, &wicBitmapDecoder);
@@ -121,6 +122,7 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 
 
 ///	hr = m_pRT->CreateBitmapFromWicBitmap(m_pConvertedSourceBitmap, nullptr, &m_pD2DBitmap);
+*/
 
 
 	// Create D2d factory
@@ -229,14 +231,15 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	imagableArea.width = paperSize.cx - (2 * PAGE_MARGIN_IN_DIPS);
 	imagableArea.height = paperSize.cy - (2 * PAGE_MARGIN_IN_DIPS);
 
-	// Create IWICBitmap
-	IWICBitmap* wicBitmap;
-	hr = wicFactory->CreateBitmapFromHBITMAP(hBitmap, nullptr, WICBitmapUseAlpha, &wicBitmap);
+	// Create the surface to render to
+	IDXGISurface* surface;
+	DXGI_SURFACE_DESC surfaceDesc = { 0 };
+	surfaceDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+	surfaceDesc.Width = paperSize.cx;
+	surfaceDesc.Height = paperSize.cy;
+	hr = dxgiDevice->CreateSurface(&surfaceDesc, 1, DXGI_USAGE_RENDER_TARGET_OUTPUT, nullptr, &surface);
 	CHECK(SUCCEEDED(hr));
-	CHECK(wicBitmap);
-
-
-
+	CHECK(surface);
 
 	// Create the render target: https://docs.microsoft.com/en-us/windows/desktop/Direct2D/direct2d-and-direct3d-interoperation-overview#writing-to-a-direct3d-surface-with-a-dxgi-surface-render-target
 	ID2D1RenderTarget* renderTarget;
@@ -247,12 +250,15 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
         96.0f,
         D2D1_RENDER_TARGET_USAGE_NONE,
         D2D1_FEATURE_LEVEL_DEFAULT);
-	hr = d2dFactory->CreateDxgiSurfaceRenderTarget((dxgiDevice, renderTargetProperties, &renderTarget);
+	hr = d2dFactory->CreateDxgiSurfaceRenderTarget(surface, renderTargetProperties, &renderTarget);
 	CHECK(SUCCEEDED(hr));
 	CHECK(renderTarget);
 
-
-
+	// Create IWICBitmap
+	IWICBitmap* wicBitmap;
+	hr = wicFactory->CreateBitmapFromHBITMAP(hBitmap, nullptr, WICBitmapUseAlpha, &wicBitmap);
+	CHECK(SUCCEEDED(hr));
+	CHECK(wicBitmap);
 
 	// Create D2d bitmap
 	ID2D1Bitmap* d2dBitmap;
@@ -276,9 +282,13 @@ HRESULT MyCreateDeviceContext(const wchar_t* printerName, SIZE paperSize, SIZE b
 	renderTarget->Release();
 	wicBitmap->Release();
 
+	/*
 	formatConverter->Release();
 	pFrame->Release();
 	wicBitmapDecoder->Release();
+	*/
+
+	surface->Release();
 
 	commandList->Release();
 	d2dContextForPrint->Release();
