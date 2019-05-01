@@ -157,6 +157,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bmp2Prn.cpp" />
+    <ClCompile Include="ImagePrinter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImagePrinter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
