@@ -31,8 +31,6 @@
 static const FLOAT PAGE_WIDTH_IN_DIPS    = 8.5f * 96.0f;     // 8.5 inches
 static const FLOAT PAGE_HEIGHT_IN_DIPS   = 11.0f * 96.0f;    // 11 inches
 static const FLOAT PAGE_MARGIN_IN_DIPS   = 96.0f;            // 1 inch
-static const FLOAT FRAME_HEIGHT_IN_DIPS  = 400.0f;           // 400 DIPs
-static const FLOAT HOURGLASS_SIZE        = 200.0f;           // 200 DIPs
 
 // Initializes members.
 ImagePrinter::ImagePrinter() :
@@ -277,8 +275,6 @@ HRESULT ImagePrinter::CreateDeviceResources(LPCWSTR imageFilePath)
                 m_d2dContext,
                 m_wicFactory,
 				imageFilePath,
-                100,
-                0,
                 &m_customBitmap
                 );
         }
@@ -332,12 +328,6 @@ HRESULT ImagePrinter::DrawToContext(
     D2D1_SIZE_F targetSize = {0};
     targetSize.width = m_pageWidth - 2 * margin;
     targetSize.height = m_pageHeight - 2 * margin;
-
-    // Compute the size of the gridded background rectangle.
-    D2D1_SIZE_F frameSize = D2D1::SizeF(
-        targetSize.width,
-        FRAME_HEIGHT_IN_DIPS
-        );
 
     // Compute the translation matrix that simulates printing.
 	D2D1_MATRIX_3X2_F scrollTransform = D2D1::Matrix3x2F::Translation(margin, margin);
@@ -501,8 +491,6 @@ HRESULT ImagePrinter::LoadBitmapFromFile(
     _In_ ID2D1DeviceContext* d2dContext,
     _In_ IWICImagingFactory* wicFactory,
     _In_ PCWSTR uri,
-    UINT destinationWidth,
-    UINT destinationHeight,
     _Outptr_ ID2D1Bitmap** bitmap
     )
 {
@@ -530,67 +518,16 @@ HRESULT ImagePrinter::LoadBitmapFromFile(
         hr = wicFactory->CreateFormatConverter(&formatConverter);
     }
 
-    IWICBitmapScaler* bitmapScaler = nullptr;
     if (SUCCEEDED(hr))
     {
-        if (destinationWidth == 0 && destinationHeight == 0)
-        {
-            // Don't scale the image.
-            hr = formatConverter->Initialize(
-                frameDecode,
-                GUID_WICPixelFormat32bppPBGRA,
-                WICBitmapDitherTypeNone,
-                nullptr,
-                0.0f,
-                WICBitmapPaletteTypeMedianCut
-                );
-        }
-        else
-        {
-            // If a new width or height was specified, create an
-            // IWICBitmapScaler and use it to resize the image.
-            UINT originalWidth;
-            UINT originalHeight;
-            hr = frameDecode->GetSize(&originalWidth, &originalHeight);
-
-            if (SUCCEEDED(hr))
-            {
-                if (destinationWidth == 0)
-                {
-                    FLOAT scalar = static_cast<FLOAT>(destinationHeight) / static_cast<FLOAT>(originalHeight);
-                    destinationWidth = static_cast<UINT>(scalar * static_cast<FLOAT>(originalWidth));
-                }
-                else if (destinationHeight == 0)
-                {
-                    FLOAT scalar = static_cast<FLOAT>(destinationWidth) / static_cast<FLOAT>(originalWidth);
-                    destinationHeight = static_cast<UINT>(scalar * static_cast<FLOAT>(originalHeight));
-                }
-
-                hr = wicFactory->CreateBitmapScaler(&bitmapScaler);
-
-                if (SUCCEEDED(hr))
-                {
-                    hr = bitmapScaler->Initialize(
-                        frameDecode,
-                        destinationWidth,
-                        destinationHeight,
-                        WICBitmapInterpolationModeCubic
-                        );
-                }
-
-                if (SUCCEEDED(hr))
-                {
-                    hr = formatConverter->Initialize(
-                        bitmapScaler,
-                        GUID_WICPixelFormat32bppPBGRA,
-                        WICBitmapDitherTypeNone,
-                        nullptr,
-                        0.f,
-                        WICBitmapPaletteTypeMedianCut
-                        );
-                }
-            }
-        }
+        hr = formatConverter->Initialize(
+            frameDecode,
+            GUID_WICPixelFormat32bppPBGRA,
+            WICBitmapDitherTypeNone,
+            nullptr,
+            0.0f,
+            WICBitmapPaletteTypeMedianCut
+            );
     }
 
     if (SUCCEEDED(hr))
@@ -606,7 +543,6 @@ HRESULT ImagePrinter::LoadBitmapFromFile(
     SafeRelease(&bitmapDecoder);
     SafeRelease(&frameDecode);
     SafeRelease(&formatConverter);
-    SafeRelease(&bitmapScaler);
 
     return hr;
 }

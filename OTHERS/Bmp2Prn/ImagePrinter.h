@@ -95,8 +95,6 @@ private:
 		_In_ ID2D1DeviceContext* d2dContext,
 		_In_ IWICImagingFactory* wicFactory,
 		_In_ PCWSTR uri,
-		UINT destinationWidth,
-		UINT destinationHeight,
 		_Outptr_ ID2D1Bitmap** bitmap
 	);
 private:
